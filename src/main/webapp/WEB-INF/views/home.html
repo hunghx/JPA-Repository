@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Home</title>
+</head>
+<body>
+
+<h1>Đây là trang chủ </h1>
+<a th:href="@{/create}">Thêm mới</a>
+<h2>Danh sách khách hàng</h2>
+<form>
+    <select name="sortBy">
+        <option value="Age-ASC">Tuổi tăng dần</option>
+        <option value="Age-DESC">Tuổi giảm dần</option>
+        <option value="Name-ASC">Tên tăng dần</option>
+        <option value="Name-DESC">Tên Giảm dần</option>
+    </select>
+    <button type="submit">Submit</button>
+</form>
+<table border="1" cellpadding="10" cellspacing="0">
+    <thead>
+    <tr>
+        <th>STT</th>
+        <th>Name</th>
+        <th>Age</th>
+        <th colspan="2">Action</th>
+    </tr>
+    </thead>
+    <tbody>
+        <tr th:each="c,ctr:${list}">
+            <td th:text="${ctr.count}"></td>
+            <td th:text="${c.getName()}"></td>
+            <td th:text="${c.getAge()}"></td>
+            <td><a th:href="@{/edit/__${c.getId()}__}">EDIT</a></td>
+            <td><a th:href="@{/delete/__${c.getId()}__}">DELETE</a></td>
+        </tr>
+    </tbody>
+</table>
+<div>
+    <a th:if="${list.hasPrevious()}" th:href="@{|/?page=${list.number -1}|}">Previous</a>
+    <span th:text="${list.number + 1}"></span>/<span th:text="${list.getTotalPages()}"></span>
+    <a th:if="${list.hasNext()}" th:href="@{|/?page=${list.number +1}|}">Next</a>
+</body>
+</html>
