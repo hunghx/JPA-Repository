@@ -1,14 +1,20 @@
 package rikkei.academy.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+//    @NotBlank(message = "Khong duoc de trong!")
+//    @Size(min = 5,message = "Ten toi thieu 5 ki tu")
     @Column(name="name",columnDefinition = "text")
     private String name;
+//    @Min(value = 18,message = "tuoi chua du 18")
     @Column(nullable = false)
     private int age;
     @ManyToOne()

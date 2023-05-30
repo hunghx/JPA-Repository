@@ -13,11 +13,15 @@
 <table>
   <tr>
     <th>Name</th>
-    <td><input type="text" th:field="*{name}"/></td>
+    <td><input type="text" th:field="*{name}"/>
+        <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+    </td>
+
   </tr>
   <tr>
     <th>Age</th>
-    <td><input type="number" th:field="*{age}"/></td>
+    <td><input type="number" th:field="*{age}"/>
+        <p th:if="${#fields.hasErrors('age')}" th:errors="*{age}"></p></td>
   </tr>
     <tr>
         <th>Country</th>

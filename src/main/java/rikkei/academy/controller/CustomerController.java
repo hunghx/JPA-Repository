@@ -7,13 +7,16 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import rikkei.academy.model.Country;
 import rikkei.academy.model.Customer;
 import rikkei.academy.service.country.ICountryService;
 import rikkei.academy.service.customer.ICustomerService;
+import rikkei.academy.validate.CustomerValidate;
 
+import javax.validation.Valid;
 import java.util.Optional;
 
 
@@ -69,9 +72,14 @@ public class CustomerController {
     }
 
     @PostMapping("/create")
-    public String create(@ModelAttribute("customer") Customer c) {
-        customerService.save(c);
-        return "redirect:/";
+    public String create(@ModelAttribute("customer") Customer c, BindingResult bindingResult) {
+        new CustomerValidate().checkValidate(c,bindingResult);
+        if (bindingResult.hasFieldErrors()){
+            return "add";
+        }else {
+            customerService.save(c);
+            return "redirect:/";
+        }
     }
 
     @GetMapping("/edit/{id}")
@@ -81,7 +89,7 @@ public class CustomerController {
     }
 
     @PostMapping("/update")
-    public String update(@ModelAttribute("customer") Customer c) {
+    public String update(@Valid @ModelAttribute("customer") Customer c) {
         customerService.save(c);
         return "redirect:/";
     }
